@@ -10,6 +10,7 @@ const NavStyles = styled.nav`
   }
   ul {
     margin: 0;
+    margin-top: -6rem;
     text-align: center;
     list-style: none;
     padding: 0;
@@ -35,8 +36,8 @@ const NavStyles = styled.nav`
   }
   a {
     font-size: 3rem;
-   text-decoration: none;
-   &:hover {
+    text-decoration: none;
+    &:hover {
      color: var(--red)
    }
   }
