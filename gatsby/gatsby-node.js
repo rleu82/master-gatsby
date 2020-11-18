@@ -66,7 +66,6 @@ async function fetchBeersAndTurnIntoNodes({
   // 1. fetch list of beers
   const res = await fetch('https://sampleapis.com/beers/api/ale');
   const beers = await res.json();
-  console.log(beers);
   // 2. loop over each one
   beers.forEach((beer) => {
     // const nodeContent = JSON.stringify(beer);
@@ -88,6 +87,45 @@ async function fetchBeersAndTurnIntoNodes({
   });
 }
 
+async function turnSlicemastersIntoPages({ graphql, actions }) {
+  // 1. Query all slicemasters
+  const { data } = await graphql(`
+    query {
+      slicemasters: allSanityPerson {
+        totalCount
+        nodes {
+          name
+          id
+          slug {
+            current
+          }
+        }
+      }
+    }
+  `);
+  // TODO: 2. Turn each slicemaster into their own page (TODO)
+  // 3. Figure out how many pages there are based on how many slicemasters there are, and how many per page!
+  const pageSize = parseInt(process.env.GATSBY_PAGE_SIZE);
+  const pageCount = Math.ceil(data.slicemasters.totalCount / pageSize);
+  // console.log(
+  //   `There are ${data.slicemasters.totalCount} total people. And we have ${pageCount} pages with ${pageSize} per page`
+  // );
+  // 4. Loop from 1 to n and create the pages for them
+  Array.from({ length: pageCount }).forEach((_, i) => {
+    // console.log(`Creating page ${i}`);
+    actions.createPage({
+      path: `/slicemasters/${i + 1}`,
+      component: path.resolve('./src/pages/slicemasters.js'),
+      // This data is pass to the template when created
+      context: {
+        skip: i * pageSize,
+        currentPage: i + 1,
+        pageSize,
+      },
+    });
+  });
+}
+
 export async function sourceNodes(params) {
   // fetch pages of beers and source into gatsby api
   await Promise.all([fetchBeersAndTurnIntoNodes(params)]);
@@ -99,6 +137,7 @@ export async function createPages(params) {
   await Promise.all([
     turnPizzasIntoPages(params),
     turnToppingsIntoPages(params),
+    turnSlicemastersIntoPages(params),
   ]);
   // 1. pizzas, toppings
   // 2. toppings
