@@ -26,7 +26,6 @@ const SingleBeerStyles = styled.div`
 `;
 
 export default function BeersPage({ data }) {
-  console.log(data);
   return (
     <>
       <h2 className="center">
