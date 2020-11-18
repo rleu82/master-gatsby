@@ -37,11 +37,17 @@ const SlicemastersStyles = styled.div`
   }
 `;
 
-export default function SliceMastersPage({ data }) {
+export default function SliceMastersPage({ data, pageContext }) {
   const slicemasters = data.slicemasters.nodes;
   return (
     <>
-      <Pagination />
+      <Pagination
+        pageSize={parseInt(process.env.GATSBY_PAGE_SIZE)}
+        totalCount={data.slicemasters.totalCount}
+        currentPage={pageContext.currentPage || 1}
+        skip={pageContext.skip}
+        base="/slicemasters"
+      />
       <SlicemasterGrid>
         {slicemasters.map((person) => (
           <SlicemastersStyles key={person.id}>
