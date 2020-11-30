@@ -42,7 +42,6 @@ export default function usePizza({ pizzas, values }) {
       email: values.email,
       mapleSyrup: values.mapleSyrup,
     };
-    console.log(body);
     // 4. Send data to a serverless function when they checkout
     const res = await fetch(
       `${process.env.GATSBY_SERVERLESS_BASE}/placeOrder`,
