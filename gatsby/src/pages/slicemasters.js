@@ -8,7 +8,7 @@ import SEO from '../components/SEO';
 const SlicemasterGrid = styled.div`
   display: grid;
   grid-gap: 2rem;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
 `;
 
 const SlicemastersStyles = styled.div`
@@ -19,7 +19,7 @@ const SlicemastersStyles = styled.div`
     height: 400px;
   }
   h2 {
-    transform: rotate(-3deg);
+    transform: rotate(-2deg);
     text-align: center;
     font-size: 4rem;
     margin-bottom: -2rem;
